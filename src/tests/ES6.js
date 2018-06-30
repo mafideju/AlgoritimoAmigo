@@ -16,7 +16,7 @@ class Person {
 }
 
 class Students extends Person {
-    constructor(nome, idade, graduacao){
+    constructor(nome, idade, graduacao = 'Ensino Medio'){
         super(nome, idade);
         this.graduacao = graduacao;
     }
@@ -26,7 +26,7 @@ class Students extends Person {
     ola(){
         let descricao = super.ola();
         if (this.graduado()) {
-            descricao += ` Sou formado em ${this.graduacao}.`;
+            descricao += ` Tenho formação em ${this.graduacao}.`;
         } else {
             descricao += ` Não tenho formação alguma.`
         }
@@ -35,7 +35,7 @@ class Students extends Person {
 }
 
 class Viagem extends Students {
-    constructor(nome, idade, graduacao, destino) {
+    constructor(nome, idade, graduacao, destino = 'casa') {
         super(nome, idade, graduacao);
         this.destino = destino;
     }
@@ -54,7 +54,7 @@ class Viagem extends Students {
 }
 
 class Meio extends Viagem {
-    constructor(nome, idade, graduacao, destino, transporte) {
+    constructor(nome, idade, graduacao, destino, transporte = 'avião') {
         super(nome, idade, graduacao, destino);
         this.transporte = transporte;
     }
@@ -73,6 +73,9 @@ class Meio extends Viagem {
 }
 
 const Marcio = new Meio('Marcio', 35, 'JavaScript', 'Boston', 'trem');
-const a = new Meio();
+const Elisa = new Meio ('Elisa', 28, 'Design', 'Paris');
+const a = new Meio(undefined, undefined, undefined, 'rua', 'pé');
+
+console.log(Elisa.ola())
 console.log(Marcio.ola())
 console.log(a.ola())
