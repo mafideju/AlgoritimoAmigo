@@ -27,6 +27,12 @@ class TestOne extends Component {
     });
   };
 
+  onMakeDecision = () => {
+    const random = Math.floor(Math.random() * this.state.options.length);
+    const option = this.state.options[random];
+    console.log(option);
+  };
+
   render() {
     const { options, title, subtitle, input, numbers } = this.state;
     return (
@@ -34,18 +40,29 @@ class TestOne extends Component {
         <h2>{title}</h2>
         {subtitle && <p>{subtitle}</p>}
         <br />
-        {options.length > 0
-          ? 'Essa são as suas opções'
-          : 'Você não tem escolhas.'}
+        <h6>
+          {options.length > 0
+            ? 'Essa são as suas opções'
+            : 'Você não tem escolhas.'}
+        </h6>
         <ol>
           {options.map(option => {
             return <li key={option}>{option}</li>;
           })}
         </ol>
-        <button onClick={this.onRemoveAll}>Remover Todos</button>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={this.onMakeDecision}
+          disabled={options.length === 0}
+        >
+          O Que Fazer?
+        </button>
+        <button className="btn btn-outline-dark" onClick={this.onRemoveAll}>
+          Remover Todos
+        </button>
         <form onSubmit={this.onFormSubmit}>
           <input type="text" name="option" />
-          <button>Adicionar</button>
+          <button className="btn btn-outline-secondary">Adicionar</button>
         </form>
       </div>
     );
