@@ -6,8 +6,13 @@ class Options extends Component {
   render() {
     return (
       <div>
-        <h1>Options</h1>
-        <Option />
+        <h4>Opções:</h4>{' '}
+        {this.props.options.map(option => {
+          return <Option key={option} optionText={option} />;
+        })}
+        <button onClick={this.props.handleDeleteOptions}>
+          Remover Tarefas
+        </button>
       </div>
     );
   }
