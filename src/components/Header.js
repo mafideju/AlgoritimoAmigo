@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <h3>{this.props.subtitle}</h3>
-      </div>
-    );
-  }
-}
+const Header = props => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      {props.subtitle && <h3>{props.subtitle}</h3>}
+    </div>
+  );
+};
+Header.defaultProps = {
+  title: 'Algoritimo Mandão',
+  subtitle: "Deixa Qu'eu Decido!!"
+};
 export default Header;

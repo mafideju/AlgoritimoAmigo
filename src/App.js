@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 // import TestOne from './TESTS/TestOne';
 // import TestTwo from './TESTS/TestTwo';
 // import TestThree from './TESTS/TestThree';
-// import TestFour from './TESTS/TestFour';
+import TestFour from './TESTS/TestFour';
 // import TestFive from './TESTS/TestFive';
 
 import Header from './components/Header';
@@ -17,8 +17,34 @@ import './styles/main.scss';
 
 class App extends Component {
   state = {
-    options: ['Marta', 'Katia', 'Live', 'R.E.M']
+    options: this.props.options
   };
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState(() => ({ options }));
+      }
+    } catch (err) {
+      alert(err);
+    }
+
+    console.log('fetching');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem('options', json);
+    }
+    console.log('saving');
+  }
+
+  componentWillMount() {
+    console.log('Vai montar');
+  }
 
   handleDeleteOptions = () => {
     this.setState(() => {
@@ -31,6 +57,7 @@ class App extends Component {
   handlePick = () => {
     const random = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[random];
+    alert(option);
   };
 
   handleAddOption = option => {
@@ -46,12 +73,22 @@ class App extends Component {
     });
   };
 
+  // DELETE BUTTON
+  // DELETE FUNCTION
+  handleDeleteOne = optionRemove => {
+    this.setState(prevState => ({
+      options: prevState.options.filter(option => {
+        return optionRemove !== option;
+      })
+    }));
+  };
+
   render() {
-    const title = 'Algoritimo Amigo';
-    const subtitle = "Deixa Qu'eu Decido!";
+    console.warn('Rendeu');
     return (
       <div>
-        <Header title={title} subtitle={subtitle} />
+        <Header />
+        <TestFour />
         <Action
           hasOption={this.state.options.length > 0}
           handlePick={this.handlePick}
@@ -59,10 +96,14 @@ class App extends Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOne={this.handleDeleteOne}
         />
         <AddOption handleAddOption={this.handleAddOption} />
       </div>
     );
   }
 }
+App.defaultProps = {
+  options: []
+};
 export default App;

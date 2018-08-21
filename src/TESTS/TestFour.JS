@@ -11,6 +11,17 @@ class TestFour extends Component {
     this.minusOne = this.minusOne.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const json = JSON.stringify(this.state.contador);
+    localStorage.setItem('contador', json);
+  }
+
+  componentDidMount() {
+    const json = localStorage.getItem('contador');
+    const contador = JSON.parse(json);
+    this.setState(() => ({ contador }));
+  }
+
   addOne() {
     this.setState({
       contador: this.state.contador + 1
