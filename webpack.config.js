@@ -36,8 +36,31 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: [
+          {
+            loader: 'style-loader' // inject CSS to page
+          },
+          {
+            loader: 'css-loader' // translates CSS into CommonJS modules
+          },
+          {
+            loader: 'postcss-loader', // Run post css actions
+            options: {
+              plugins: function() {
+                // post css plugins, can be exported to postcss.config.js
+                return [require('precss'), require('autoprefixer')];
+              }
+            }
+          },
+          {
+            loader: 'sass-loader' // compiles Sass to CSS
+          }
+        ]
       },
+      // {
+      //   test: /\.s?css$/,
+      //   use: ['style-loader', 'css-loader', 'sass-loader']
+      // },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
@@ -51,16 +74,6 @@ module.exports = {
           }
         ]
       }
-      // {
-      //   test: /\.(jpg|png)$/,
-      //   use: {
-      //     loader: 'url-loader'
-      //   }
-      // },
-      // {
-      //   test: /\.svg$/,
-      //   use: 'file-loader'
-      // }
     ]
   },
   devtool: 'cheap-module-eval-source-map'

@@ -11,6 +11,7 @@
   "author": "Marcio Rodrigues Mafideju",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^9.1.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -26,6 +27,8 @@
     "jquery": "^3.3.1",
     "node-sass": "^4.9.2",
     "popper.js": "^1.14.4",
+    "postcss-loader": "^3.0.0",
+    "precss": "^3.1.2",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.1.0",
@@ -37,6 +40,7 @@
     "babel-polyfill": "^6.26.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-modal": "^3.5.1",
     "react-router-dom": "^4.3.1"
   }
 }

@@ -5,46 +5,30 @@ import ReactDOM from 'react-dom';
 // import TestOne from './TESTS/TestOne';
 // import TestTwo from './TESTS/TestTwo';
 // import TestThree from './TESTS/TestThree';
-import TestFour from './TESTS/TestFour';
+// import TestFour from './TESTS/TestFour';
 // import TestFive from './TESTS/TestFive';
 
 import Header from './components/Header';
 import Action from './components/Action';
 import Options from './components/Options';
 import AddOption from './components/AddOption';
+import OptionModal from './components/OptionModal';
 
 import './styles/main.scss';
 
 class App extends Component {
   state = {
-    options: this.props.options
+    options: this.props.options,
+    selectedOption: undefined
   };
 
-  componentDidMount() {
-    try {
-      const json = localStorage.getItem('options');
-      const options = JSON.parse(json);
-      if (options) {
-        this.setState(() => ({ options }));
-      }
-    } catch (err) {
-      alert(err);
-    }
-
-    console.log('fetching');
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.options.length !== this.state.options.length) {
-      const json = JSON.stringify(this.state.options);
-      localStorage.setItem('options', json);
-    }
-    console.log('saving');
-  }
-
-  componentWillMount() {
-    console.log('Vai montar');
-  }
+  handleModalClose = () => {
+    this.setState(() => {
+      return {
+        selectedOption: undefined
+      };
+    });
+  };
 
   handleDeleteOptions = () => {
     this.setState(() => {
@@ -57,7 +41,11 @@ class App extends Component {
   handlePick = () => {
     const random = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[random];
-    alert(option);
+    this.setState(() => {
+      return {
+        selectedOption: option
+      };
+    });
   };
 
   handleAddOption = option => {
@@ -83,12 +71,41 @@ class App extends Component {
     }));
   };
 
+  // LIFECICLE METHODS
+
+  // PEGAR DO CACHE E COLOCAR NO STATE
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState(() => ({ options }));
+      }
+    } catch (err) {
+      alert(err);
+    }
+
+    console.log('fetching');
+  }
+
+  // COLOCAR NO CACHE
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem('options', json);
+    }
+    console.log('saving');
+  }
+
+  componentWillMount() {
+    console.log('Vai montar');
+  }
+
   render() {
     console.warn('Rendeu');
     return (
       <div>
         <Header />
-        <TestFour />
         <Action
           hasOption={this.state.options.length > 0}
           handlePick={this.handlePick}
@@ -99,6 +116,10 @@ class App extends Component {
           handleDeleteOne={this.handleDeleteOne}
         />
         <AddOption handleAddOption={this.handleAddOption} />
+        <OptionModal
+          selectedOption={this.state.selectedOption}
+          handleModalClose={this.handleModalClose}
+        />
       </div>
     );
   }
