@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 // import TestZero from './TESTS/TestZero';
 // import TestOne from './TESTS/TestOne';
@@ -14,7 +13,7 @@ import Options from './components/Options';
 import AddOption from './components/AddOption';
 import OptionModal from './components/OptionModal';
 
-import './styles/main.scss';
+import './index.scss';
 
 class App extends Component {
   state = {
@@ -104,18 +103,22 @@ class App extends Component {
   render() {
     console.warn('Rendeu');
     return (
-      <div>
+      <div className="backdrop">
         <Header />
-        <Action
-          hasOption={this.state.options.length > 0}
-          handlePick={this.handlePick}
-        />
-        <Options
-          options={this.state.options}
-          handleDeleteOptions={this.handleDeleteOptions}
-          handleDeleteOne={this.handleDeleteOne}
-        />
-        <AddOption handleAddOption={this.handleAddOption} />
+        <div className="container">
+          <Action
+            hasOption={this.state.options.length > 0}
+            handlePick={this.handlePick}
+          />
+          <div className="widget">
+            <Options
+              options={this.state.options}
+              handleDeleteOptions={this.handleDeleteOptions}
+              handleDeleteOne={this.handleDeleteOne}
+            />
+            <AddOption handleAddOption={this.handleAddOption} />
+          </div>
+        </div>
         <OptionModal
           selectedOption={this.state.selectedOption}
           handleModalClose={this.handleModalClose}
