@@ -14,7 +14,7 @@ module.exports = {
   },
   devServer: {
     // mostra qual pasta alimentará o devServer
-    contentBase: './public'
+    contentBase: './publics'
   },
   plugins: [
     // fazer o stream de um arquivo da src para um arquivo public
